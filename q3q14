@@ -1,0 +1,59 @@
+<!-- Styles -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 500px;
+}
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+var chart = am4core.create("chartdiv", am4charts.ChordDiagram);
+chart.hiddenState.properties.opacity = 0;
+
+chart.data = [
+    { from: "Some high school, no diploma", to: "Correct", value: 2 },
+    { from: "Some high school, no diploma", to: "Incorrect", value: 1 },
+    { from: "High school graduate, diploma, or equivalent (GED)", to: "Correct", value: 4 },
+    { from: "High school graduate, diploma, or equivalent (GED)", to: "Incorrect", value: 1 },
+    { from: "Associate's degree", to: "Correct", value: 11 },
+    { from: "Associate's degree", to: "Incorrect", value: 5 },
+    { from: "Bachelor's degree", to: "Correct", value: 26 },
+    { from: "Bachelor's degree", to: "Incorrect", value: 15 },
+    { from: "Professional degree", to: "Correct", value: 1 },
+    { from: "Professional degree", to: "Incorrect", value: 0 },
+    { from: "Doctorate degree", to: "Correct", value: 3 },
+    { from: "Doctorate degree", to: "Incorrect", value: 1 },
+    { from: "Some college credit, no degree", to: "Correct", value: 8 },
+    { from: "Some college credit, no degree", to: "Incorrect", value: 5 },
+    { from: "Master's degree", to: "Correct", value: 28 },
+    { from: "Master's degree", to: "Incorrect", value: 11 },
+
+];
+
+chart.dataFields.fromName = "from";
+chart.dataFields.toName = "to";
+chart.dataFields.value = "value";
+
+// make nodes draggable
+var nodeTemplate = chart.nodes.template;
+nodeTemplate.readerTitle = "Click to show/hide or drag to rearrange";
+nodeTemplate.showSystemTooltip = true;
+nodeTemplate.cursorOverStyle = am4core.MouseCursorStyle.pointer
+
+}); // end am4core.ready()
+</script>
+
+<!-- HTML -->
+<div id="chartdiv"></div>
