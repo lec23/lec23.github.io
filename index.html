@@ -55,7 +55,7 @@ nodeTemplate.cursorOverStyle = am4core.MouseCursorStyle.pointer
 
 // add title
   var title = chart.titles.create();
-title.text = "Comparing education to the question 'Do different body parts have the same genes?''";
+title.text = "1. Chord Chart: Comparing education to the question 'Do different body parts have the same genes?''";
 title.fontSize = 25;
 title.marginBottom = 30;
 
@@ -66,10 +66,109 @@ title.marginBottom = 30;
 <div id="chartdiv1"></div>
 </div>
 
+
+
+
 <div>
 <!-- Styles -->
 <style>
 #chartdiv2 {
+  width: 100%;
+  height: 500px;
+}
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+
+
+var chart = am4core.create("chartdiv2", am4charts.ChordDiagram);
+
+
+chart.data = [
+    { from: "Some high school, no diploma", to: "Correct", value: 2 },
+    { from: "Some high school, no diploma", to: "Incorrect", value: 1 },
+    { from: "High school graduate, diploma, or equivalent (GED)", to: "Correct", value: 4 },
+    { from: "High school graduate, diploma, or equivalent (GED)", to: "Incorrect", value: 1 },
+    { from: "Associate's degree", to: "Correct", value: 11 },
+    { from: "Associate's degree", to: "Incorrect", value: 5 },
+    { from: "Bachelor's degree", to: "Correct", value: 26 },
+    { from: "Bachelor's degree", to: "Incorrect", value: 15 },
+    { from: "Professional degree", to: "Correct", value: 1 },
+    { from: "Professional degree", to: "Incorrect", value: 0 },
+    { from: "Doctorate degree", to: "Correct", value: 3 },
+    { from: "Doctorate degree", to: "Incorrect", value: 1 },
+    { from: "Some college credit, no degree", to: "Correct", value: 8 },
+    { from: "Some college credit, no degree", to: "Incorrect", value: 5 },
+    { from: "Master's degree", to: "Correct", value: 28 },
+    { from: "Master's degree", to: "Incorrect", value: 11 },
+];
+
+chart.dataFields.fromName = "from";
+chart.dataFields.toName = "to";
+chart.dataFields.value = "value";
+
+// make nodes draggable
+var nodeTemplate = chart.nodes.template;
+nodeTemplate.readerTitle = "Click to show/hide or drag to rearrange";
+nodeTemplate.showSystemTooltip = true;
+
+var nodeLink = chart.links.template;
+var bullet = nodeLink.bullets.push(new am4charts.CircleBullet());
+bullet.fillOpacity = 1;
+bullet.circle.radius = 5;
+bullet.locationX = 0.5;
+
+// create animations
+chart.events.on("ready", function() {
+    for (var i = 0; i < chart.links.length; i++) {
+        var link = chart.links.getIndex(i);
+        var bullet = link.bullets.getIndex(0);
+
+        animateBullet(bullet);
+    }
+})
+
+function animateBullet(bullet) {
+    var duration = 3000 * Math.random() + 2000;
+    var animation = bullet.animate([{ property: "locationX", from: 0, to: 1 }], duration)
+    animation.events.on("animationended", function(event) {
+        animateBullet(event.target.object);
+    })
+}
+  
+// add title
+  var title = chart.titles.create();
+title.text = "2. Chord Chart with animated bullets: Comparing education to the question 'Do different body parts have the same genes?''";
+title.fontSize = 25;
+title.marginBottom = 30;
+
+}); // end am4core.ready()
+</script>
+
+<!-- HTML -->
+<div id="chartdiv2"></div>
+<div>
+
+
+  
+  
+  
+<div>
+<!-- Styles -->
+<style>
+#chartdiv3 {
   width: 100%;
   height: 500px;
 }
@@ -94,7 +193,7 @@ am4core.useTheme(am4themes_animated);
 
 
 // Create chart instance
-var chart = am4core.create("chartdiv2", am4charts.RadarChart);
+var chart = am4core.create("chartdiv3", am4charts.RadarChart);
 
 // Add data
 chart.data = [{
@@ -102,7 +201,7 @@ chart.data = [{
   "value": 67,
   "full": 100
 }, {
-  "category": "High school graduate, diplima, or equivalent/GED (5)",
+  "category": "High school graduate, diploma, or equivalent/GED (5)",
   "value": 80,
   "full": 100
 }, {
@@ -185,7 +284,7 @@ chart.cursor = new am4charts.RadarCursor();
   
 // add title
   var title = chart.titles.create();
-title.text = "Percentage correct by education to the question 'Do different body parts have the same genes?''";
+title.text = "3. Gauge Chart: Percentage correct by education to the question 'Do different body parts have the same genes?''";
 title.fontSize = 25;
 title.marginBottom = 30;
   
@@ -198,5 +297,606 @@ label.align = "center";
 </script>
 
 <!-- HTML -->
-<div id="chartdiv2"></div>
+<div id="chartdiv3"></div>
 </div>
+  
+
+  
+  
+  
+<div>
+  <!-- Styles -->
+<style>
+#chartdiv7 {
+  width: 100%;
+  height: 500px;
+}
+
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+var data = [{
+  "Education": "Bachelor",
+  "units": 500,
+  "pie": [{
+    "value": 250,
+    "title": "Cat #1"
+  }, {
+    "value": 100,
+    "title": "Cat #3"
+  }]
+}, {
+  "country": "Czechia",
+  "units": 300,
+  "pie": [{
+    "value": 80,
+    "title": "Cat #1"
+  }, {
+    "value": 130,
+    "title": "Cat #2"
+  }, {
+    "value": 90,
+    "title": "Cat #3"
+  }]
+}, {
+  "country": "Ireland",
+  "units": 200,
+  "pie": [{
+    "value": 60,
+    "title": "Cat #1"
+  }, {
+    "value": 55,
+    "title": "Cat #2"
+  }, {
+    "value": 70,
+    "title": "Cat #3"
+  }]
+}];
+
+
+// Create chart instance
+var chart = am4core.create("chartdiv7", am4charts.XYChart);
+chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+
+// Add data
+chart.data = data;
+
+// Create axes
+var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "education";
+categoryAxis.renderer.grid.template.disabled = true;
+
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+valueAxis.title.text = "Participants";
+valueAxis.min = 0;
+valueAxis.renderer.baseGrid.disabled = true;
+valueAxis.renderer.grid.template.strokeOpacity = 0.07;
+
+// Create series
+var series = chart.series.push(new am4charts.ColumnSeries());
+series.dataFields.valueY = "participants";
+series.dataFields.categoryX = "education";
+series.tooltip.pointerOrientation = "vertical";
+
+
+var columnTemplate = series.columns.template;
+// add tooltip on column, not template, so that slices could also have tooltip
+columnTemplate.column.tooltipText = "Series: {name}\nCategory: {categoryX}\nValue: {valueY}";
+columnTemplate.column.tooltipY = 0;
+columnTemplate.column.cornerRadiusTopLeft = 20;
+columnTemplate.column.cornerRadiusTopRight = 20;
+columnTemplate.strokeOpacity = 0;
+
+
+// as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
+columnTemplate.adapter.add("fill", function(fill, target) {
+  var color = chart.colors.getIndex(target.dataItem.index * 3);
+  return color;
+});
+
+// create pie chart as a column child
+var pieChart = series.columns.template.createChild(am4charts.PieChart);
+pieChart.width = am4core.percent(80);
+pieChart.height = am4core.percent(80);
+pieChart.align = "center";
+pieChart.valign = "middle";
+pieChart.dataFields.data = "pie";
+
+var pieSeries = pieChart.series.push(new am4charts.PieSeries());
+pieSeries.dataFields.value = "value";
+pieSeries.dataFields.category = "title";
+pieSeries.labels.template.disabled = true;
+pieSeries.ticks.template.disabled = true;
+pieSeries.slices.template.stroke = am4core.color("#ffffff");
+pieSeries.slices.template.strokeWidth = 1;
+pieSeries.slices.template.strokeOpacity = 0;
+
+pieSeries.slices.template.adapter.add("fill", function(fill, target) {
+  return am4core.color("#ffffff")
+});
+
+pieSeries.slices.template.adapter.add("fillOpacity", function(fillOpacity, target) {
+  return (target.dataItem.index + 1) * 0.2;
+});
+
+pieSeries.hiddenState.properties.startAngle = -90;
+pieSeries.hiddenState.properties.endAngle = 270;
+
+var data = [{
+  "education": "Some high school, no diploma",
+  "participants": 3,
+  "pie": [{
+    "value": 2,
+    "title": "Correct"
+  }, {
+    "value": 1,
+    "title": "Incorrect"
+  }]
+}, {
+  "education": "High school graduate, diploma, or equivalent (GED)",
+  "participants": 5,
+  "pie": [{
+    "value": 4,
+    "title": "Correct"
+  }, {
+    "value": 1,
+    "title": "Incorrect"
+  }]
+  }, {
+  "education": "Some college credit, no degree",
+  "participants": 13,
+  "pie": [{
+    "value": 8,
+    "title": "Correct"
+  }, {
+    "value": 5,
+    "title": "Incorrect"
+  }]
+    }, {
+  "education": "Associate's degree",
+  "participants": 16,
+  "pie": [{
+    "value": 11,
+    "title": "Correct"
+  }, {
+    "value": 5,
+    "title": "Incorrect"
+  }]
+      }, {
+  "education": "Bachelor's degree",
+  "participants": 41,
+  "pie": [{
+    "value": 26,
+    "title": "Correct"
+  }, {
+    "value": 15,
+    "title": "Incorrect"
+  }]
+        }, {
+  "education": "Master's degree",
+  "participants": 39,
+  "pie": [{
+    "value": 28,
+    "title": "Correct"
+  }, {
+    "value": 11,
+    "title": "Incorrect"
+  }]
+          }, {
+  "education": "Doctorate degree",
+  "participants": 4,
+  "pie": [{
+    "value": 3,
+    "title": "Correct"
+  }, {
+    "value": 1,
+    "title": "Incorrect"
+  }]
+}, {
+  "education": "Professional Degree",
+  "participants": 1,
+  "pie": [{
+    "value": 1,
+    "title": "Correct"
+  }, {
+    "value": 0,
+    "title": "Incorrect"
+  }]
+}];
+
+
+// Create chart instance
+var chart = am4core.create("chartdiv7", am4charts.XYChart);
+chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+
+// Add data
+chart.data = data;
+
+// Create axes
+var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "education";
+categoryAxis.renderer.grid.template.disabled = true;
+
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+valueAxis.title.text = "Participants";
+valueAxis.min = 0;
+valueAxis.renderer.baseGrid.disabled = true;
+valueAxis.renderer.grid.template.strokeOpacity = 0.07;
+
+// Alternate labels
+categoryAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
+  if (target.dataItem && target.dataItem.index & 2 == 2) {
+    return dy + 25;
+  }
+  return dy;
+});
+
+// Create series
+var series = chart.series.push(new am4charts.ColumnSeries());
+series.dataFields.valueY = "participants";
+series.dataFields.categoryX = "education";
+series.tooltip.pointerOrientation = "vertical";
+
+
+var columnTemplate = series.columns.template;
+// add tooltip on column, not template, so that slices could also have tooltip
+columnTemplate.column.tooltipText = "Series: {name}\nCategory: {categoryX}\nValue: {valueY}";
+columnTemplate.column.tooltipY = 0;
+columnTemplate.column.cornerRadiusTopLeft = 20;
+columnTemplate.column.cornerRadiusTopRight = 20;
+columnTemplate.strokeOpacity = 0;
+
+
+// as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
+columnTemplate.adapter.add("fill", function(fill, target) {
+  var color = chart.colors.getIndex(target.dataItem.index * 3);
+  return color;
+});
+
+// create pie chart as a column child
+var pieChart = series.columns.template.createChild(am4charts.PieChart);
+pieChart.width = am4core.percent(80);
+pieChart.height = am4core.percent(80);
+pieChart.align = "center";
+pieChart.valign = "middle";
+pieChart.dataFields.data = "pie";
+
+var pieSeries = pieChart.series.push(new am4charts.PieSeries());
+pieSeries.dataFields.value = "value";
+pieSeries.dataFields.category = "title";
+pieSeries.labels.template.disabled = true;
+pieSeries.ticks.template.disabled = true;
+pieSeries.slices.template.strokeWidth = 1;
+
+pieSeries.slices.template.adapter.add("stroke", function(stroke, target) {
+  return chart.colors.getIndex(target.parent.parent.dataItem.index * 3);
+});
+
+pieSeries.slices.template.adapter.add("fill", function(fill, target) {
+  return am4core.color("#ffffff")
+});
+
+pieSeries.slices.template.adapter.add("fillOpacity", function(fillOpacity, target) {
+  return (target.dataItem.index + 1) * 0.2;
+});
+
+pieSeries.hiddenState.properties.startAngle = -90;
+pieSeries.hiddenState.properties.endAngle = 270;
+  
+// add title
+  var title = chart.titles.create();
+title.text = "7. Bar Pie Chart: Percentage correct by education to the question 'Do different body parts have the same genes?''";
+title.fontSize = 25;
+title.marginBottom = 30;
+
+// this moves the pie out of the column if column is too small
+pieChart.adapter.add("verticalCenter", function(verticalCenter, target) {
+  var point = am4core.utils.spritePointToSprite({ x: 0, y: 0 }, target.seriesContainer, chart.plotContainer);
+  point.y -= target.dy;
+
+  if (point.y > chart.plotContainer.measuredHeight - 15) {
+    target.dy = -target.seriesContainer.measuredHeight - 15;
+  }
+  else {
+    target.dy = 0;
+  }
+  return verticalCenter
+})
+
+}); // end am4core.ready()
+</script>
+
+<!-- HTML -->
+<div id="chartdiv7"></div>
+<div id="piechart1" class="asset"></div>
+<div id="piechart2" class="asset"></div>
+<div id="piechart3" class="asset"></div>
+  <div>
+
+        
+    
+    
+ <div>
+   <!-- Styles -->
+<style>
+#chartdiv5 {
+  height: 650px;
+}
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/plugins/sunburst.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_material);
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// create chart
+var chart = am4core.create("chartdiv5", am4plugins_sunburst.Sunburst);
+chart.padding(0,0,0,0);
+chart.radius = am4core.percent(98);
+
+chart.data = [{
+  name: "18-24 years",
+  children: [
+    { name: "Correct", value: 3 },
+    { name: "Incorrect", value: 3 }
+  ]
+},
+{
+  name: "25-34 years",
+  children: [
+        { name: "Correct", value: 14 },
+        { name: "Incorrect", value: 14 }
+      ]
+    },
+{
+  name: "35-44 years",
+  children: [
+    { name: "Correct", value: 11 },
+    { name: "Incorrect", value: 2 }
+  ]
+},
+{
+  name: "45-54 years",
+  children: [
+        { name: "Correct", value: 8 },
+        { name: "Incorrect", value: 4 }
+      ]
+},
+{
+    name: "55-64 years",
+  children: [
+    { name: "Correct", value: 23 },
+    { name: "Incorrect", value: 6 }
+  ]
+},
+{
+    name: "65-74 years",
+  children: [
+    { name: "Correct", value: 22 },
+    { name: "Incorrect", value: 8 }
+  ]
+},
+{
+    name: "75 years or older",
+  children: [
+    { name: "Correct", value: 1 },
+    { name: "Incorrect", value: 2 }
+  ]
+}];
+
+chart.colors.step = 2;
+chart.fontSize = 11;
+chart.innerRadius = am4core.percent(10);
+
+// define data fields
+chart.dataFields.value = "value";
+chart.dataFields.name = "name";
+chart.dataFields.children = "children";
+
+
+var level0SeriesTemplate = new am4plugins_sunburst.SunburstSeries();
+level0SeriesTemplate.hiddenInLegend = false;
+chart.seriesTemplates.setKey("0", level0SeriesTemplate)
+
+// this makes labels to be hidden if they don't fit
+level0SeriesTemplate.labels.template.truncate = true;
+level0SeriesTemplate.labels.template.hideOversized = true;
+
+level0SeriesTemplate.labels.template.adapter.add("rotation", function(rotation, target) {
+  target.maxWidth = target.dataItem.slice.radius - target.dataItem.slice.innerRadius - 10;
+  target.maxHeight = Math.abs(target.dataItem.slice.arc * (target.dataItem.slice.innerRadius + target.dataItem.slice.radius) / 2 * am4core.math.RADIANS);
+
+  return rotation;
+})
+
+
+var level1SeriesTemplate = level0SeriesTemplate.clone();
+chart.seriesTemplates.setKey("1", level1SeriesTemplate)
+level1SeriesTemplate.fillOpacity = 0.75;
+level1SeriesTemplate.hiddenInLegend = true;
+
+var level2SeriesTemplate = level0SeriesTemplate.clone();
+chart.seriesTemplates.setKey("2", level2SeriesTemplate)
+level2SeriesTemplate.fillOpacity = 0.5;
+level2SeriesTemplate.hiddenInLegend = true;
+
+chart.legend = new am4charts.Legend();
+  
+// add title
+  var title = chart.titles.create();
+title.text = "5. Sunburst Chart: Comparing age to the question 'Do different body parts have the same genes?''";
+title.fontSize = 25;
+title.marginBottom = 30;
+
+}); // end am4core.ready()
+</script>
+
+<!-- HTML -->
+<div id="chartdiv5"></div>
+   </div>
+    
+    
+    
+    
+    
+ <div>
+   <!-- Styles -->
+<style>
+#chartdiv4 {
+  height: 650px;
+}
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/plugins/sunburst.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_material);
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// create chart
+var chart = am4core.create("chartdiv4", am4plugins_sunburst.Sunburst);
+chart.padding(0,0,0,0);
+chart.radius = am4core.percent(98);
+
+chart.data = [{
+  name: "Some highschool, no diploma",
+  children: [
+    { name: "Correct", value: 2 },
+    { name: "Incorrect", value: 1 }
+  ]
+},
+{
+  name: "High school graduate, diploma, or equivalent (GED)",
+  children: [
+    { name: "Correct", value: 4 },
+    { name: "Incorrect", value: 1 }
+  ]
+},
+{
+  name: "Some college credit, no degree",
+  children: [
+        { name: "Correct", value: 8 },
+        { name: "Incorrect", value: 5 }
+      ]
+    },
+{
+  name: "Associate's degree",
+  children: [
+    { name: "Correct", value: 11 },
+    { name: "Incorrect", value: 5 }
+  ]
+},
+{
+  name: "Bachelor's degree",
+  children: [
+        { name: "Correct", value: 26 },
+        { name: "Incorrect", value: 15 }
+      ]
+},
+{
+    name: "Master's degree",
+  children: [
+    { name: "Correct", value: 28 },
+    { name: "Incorrect", value: 11 }
+  ]
+},
+{
+    name: "Doctorate degree",
+  children: [
+    { name: "Correct", value: 3 },
+    { name: "Incorrect", value: 1 }
+  ]
+},
+{
+    name: "Professional degree",
+  children: [
+    { name: "Correct", value: 1 },
+    { name: "Incorrect", value: 0 }
+  ]
+}];
+
+chart.colors.step = 2;
+chart.fontSize = 11;
+chart.innerRadius = am4core.percent(10);
+
+// define data fields
+chart.dataFields.value = "value";
+chart.dataFields.name = "name";
+chart.dataFields.children = "children";
+
+
+var level0SeriesTemplate = new am4plugins_sunburst.SunburstSeries();
+level0SeriesTemplate.hiddenInLegend = false;
+chart.seriesTemplates.setKey("0", level0SeriesTemplate)
+
+// this makes labels to be hidden if they don't fit
+level0SeriesTemplate.labels.template.truncate = true;
+level0SeriesTemplate.labels.template.hideOversized = true;
+
+level0SeriesTemplate.labels.template.adapter.add("rotation", function(rotation, target) {
+  target.maxWidth = target.dataItem.slice.radius - target.dataItem.slice.innerRadius - 10;
+  target.maxHeight = Math.abs(target.dataItem.slice.arc * (target.dataItem.slice.innerRadius + target.dataItem.slice.radius) / 2 * am4core.math.RADIANS);
+
+  return rotation;
+})
+
+
+var level1SeriesTemplate = level0SeriesTemplate.clone();
+chart.seriesTemplates.setKey("1", level1SeriesTemplate)
+level1SeriesTemplate.fillOpacity = 0.75;
+level1SeriesTemplate.hiddenInLegend = true;
+
+var level2SeriesTemplate = level0SeriesTemplate.clone();
+chart.seriesTemplates.setKey("2", level2SeriesTemplate)
+level2SeriesTemplate.fillOpacity = 0.5;
+level2SeriesTemplate.hiddenInLegend = true;
+
+chart.legend = new am4charts.Legend();
+  
+// add title
+  var title = chart.titles.create();
+title.text = "4. Sunburst Chart: Comparing education to the question 'Do different body parts have the same genes?''";
+title.fontSize = 25;
+title.marginBottom = 30;
+
+}); // end am4core.ready()
+</script>
+
+<!-- HTML -->
+<div id="chartdiv4"></div>
+    </div>
+
+    
